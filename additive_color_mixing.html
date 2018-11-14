@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+  <head> 
+  <title>Additive color mixing</title>
+   <link rel="stylesheet" type="text/css" href="styles.css">
+   
+   <style>
+   
+    body { color:#ffffff; background-color:#000000; font-family:arial; width:410px; margin: auto;padding: 0px; } 
+        
+    input[type=range]:focus { outline: none; }    
+    input[type=range] { -webkit-appearance: none; width: 100%; margin: 14px 0; }
+    input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; background: rgba(255, 255, 255, 0); border-radius: 1px; border: 0px solid #000101; }
+    input[type=range]:focus::-webkit-slider-runnable-track { background: rgba(125, 125, 125, 0); }    
+    input[type=range]::-moz-range-track { width: 100%; height: 4px; cursor: pointer; box-shadow: 1px 1px 1px silver, 0px 0px 1px #0d0d0d; background: rgba(255, 255, 255, 0); border-radius: 1px; border: 0px solid #000101; }    
+    input[type=range]::-ms-fill-lower { background: rgba(252, 252, 252, 0); border: 0px solid #000101; border-radius: 2px; box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; }
+    input[type=range]::-ms-fill-upper { background: rgba(255, 255, 255, 0); border: 0px solid #000101; border-radius: 2px; box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; }
+    input[type=range]::-ms-thumb { box-shadow: 2px 2px 2px #000000, 0px 0px 2px #0d0d0d; border: 4px solid #ffffff; height: 32px; width: 16px; border-radius: 3px; background: #ffffff; cursor: pointer; height: 4px; }
+    input[type=range]:focus::-ms-fill-lower { background: rgba(255, 255, 255, 0); }
+    input[type=range]:focus::-ms-fill-upper { background: rgba(255, 255, 255, 0); }        
+
+    #slider_red input[type=range]::-webkit-slider-thumb { box-shadow: 2px 2px 2px #000000, 0px 0px 2px #0d0d0d; border: 0px solid #000000; height: 28px; width: 16px; border-radius: 3px; background: rgb(255,0,0); cursor: pointer; -webkit-appearance: none; margin-top: -14px; }
+    #slider_red input[type=range]::-moz-range-thumb { box-shadow: 2px 2px 2px silver, 0px 0px 2px #0d0d0d; border: 0px solid #000000; height: 32px; width: 16px; border-radius: 3px; background: rgb(255,0,0); cursor: pointer; }
+    #slider_red input[type=range]::-ms-track { width: 100%; height: 4px; cursor: pointer; background: rgb(255,0,0); border-color: transparent; color: transparent; }    
+    #slider_green input[type=range]::-webkit-slider-thumb { box-shadow: 2px 2px 2px #000000, 0px 0px 2px #0d0d0d; border: 0px solid #000000; height: 28px; width: 16px; border-radius: 3px; background: rgb(0,255,0); cursor: pointer; -webkit-appearance: none; margin-top: -14px; }
+    #slider_green input[type=range]::-moz-range-thumb { box-shadow: 2px 2px 2px silver, 0px 0px 2px #0d0d0d; border: 0px solid #000000; height: 32px; width: 16px; border-radius: 3px; background: rgb(0,255,0); cursor: pointer; }
+    #slider_green input[type=range]::-ms-track { width: 100%; height: 4px; cursor: pointer; background: rgb(0,255,0); border-color: transparent; color: transparent; }    
+    #slider_blue input[type=range]::-webkit-slider-thumb { box-shadow: 2px 2px 2px #000000, 0px 0px 2px #0d0d0d; border: 0px solid #000000; height: 28px; width: 16px; border-radius: 3px; background: rgb(0,0,255); cursor: pointer; -webkit-appearance: none; margin-top: -14px; }
+    #slider_blue input[type=range]::-moz-range-thumb { box-shadow: 2px 2px 2px silver, 0px 0px 2px #0d0d0d; border: 0px solid #000000; height: 32px; width: 16px; border-radius: 3px; background: rgb(0,0,255); cursor: pointer; } 
+    #slider_blue input[type=range]::-ms-track { width: 100%; height: 4px; cursor: pointer; background: rgb(0,0,255); border-color: transparent; color: transparent; }       
+
+   </style> 
+   
+  </head>
+ <body OnLoad="reset();"> 
+  
+  <script>  
+   
+   function reset()
+   {   
+    var slider_red=document.getElementById("red");    
+    slider_red.value=0;  
+    var slider_green=document.getElementById("green");     
+    slider_green.value=0;     
+    var slider_blue=document.getElementById("blue");
+    slider_blue.value=0;
+   }
+     
+  function redraw()
+   {
+    context.clearRect(0, 0, canvas.width, canvas.height);    
+    var radius = 120;
+
+    var red_selected = document.getElementById("red").value; 
+    red_selected = red_selected*2.55;
+    red_selected = red_selected.toFixed(0);             
+    context.beginPath();
+    context.arc(200, 140, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = "rgb(" + red_selected + ",0,0)";
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#ffffff';
+    context.stroke();      
+    context.globalCompositeOperation="lighter";
+      
+    var green_selected = document.getElementById("green").value;
+    green_selected = green_selected*2.55;
+    green_selected = green_selected.toFixed(0);
+    context.beginPath();
+    context.arc(140, 240, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = "rgb(0," + green_selected + ",0)";
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#ffffff';
+    context.stroke();      
+    context.globalCompositeOperation="lighter";   
+      
+    var blue_selected = document.getElementById("blue").value;
+    blue_selected = blue_selected*2.55;
+    blue_selected = blue_selected.toFixed(0);
+    context.beginPath();
+    context.arc(260, 240, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = "rgb(0,0," + blue_selected + ")";
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#ffffff';
+    context.stroke();      
+    context.globalCompositeOperation="lighter"; 
+   }
+  
+  </script> 
+    
+  <canvas id="mixing_canvas" width="400" height="380"></canvas>
+
+   <div id="slider_red" style="margin-left:30px;">
+    <input style="width:350px;" id="red" class="red" type="range" min="0" max="100" value="0" step="1" onchange="redraw()"><br>
+   </div>  
+  
+   <div id="slider_green" style="margin-left:30px;">
+    <input style="width:350px;" id="green" class="green" type="range" min="0" max="100" value="0" step="1" onchange="redraw()"><br>
+   </div> 
+     
+   <div id="slider_blue" style="margin-left:30px;"> 
+    <input style="width:350px;" id="blue" class="blue" type="range" min="0" max="100" value="0" step="1" onchange="redraw()">   
+   </div> 
+   
+    <script>
+     
+    var canvas = document.getElementById('mixing_canvas');
+    var context = canvas.getContext('2d');
+   
+    var radius = 120;
+
+    context.beginPath();
+    context.arc(200, 140, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = "rgb(0,0,0)";
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#ffffff';
+    context.stroke();    
+    context.globalCompositeOperation="lighter";    
+    
+    context.beginPath();
+    context.arc(140, 240, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = "rgb(0,0,0)";
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#ffffff';
+    context.stroke();
+    context.globalCompositeOperation="lighter";
+    
+    context.beginPath();
+    context.arc(260, 240, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = "rgb(0,0,0)";
+    context.fill();
+    context.lineWidth = 1;
+    context.strokeStyle = '#ffffff';
+    context.stroke();
+    context.globalCompositeOperation="lighter";    
+    
+    </script>
+    
+  </body>
+</html>
